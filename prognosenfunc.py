@@ -58,10 +58,14 @@ def get_table_data(url, table_id):
     for row in table.find_all('tr'):
         row_data = []
         for cell in row.find_all(['th', 'td']):
+            cellclass = cell.get('class', [])
+            if 'foot' in cellclass:
+                break
             colspan = int(cell.get('colspan', 1))
             row_data.append(cell.text.strip())
             for _ in range(colspan - 1):
                 row_data.append('')
-        table_data.append(row_data)
+        if row_data:
+            table_data.append(row_data)
 
     return table_data

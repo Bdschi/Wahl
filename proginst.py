@@ -3,8 +3,25 @@ import requests
 from itertools import combinations
 import prognosenfunc
 
-# Example usage:
-url = 'https://www.wahlrecht.de/umfragen/yougov.htm'  # Replace with the actual URL
+institutes =['allensbach', 'emnid', 'forsa', 'politbarometer', 'gms', 'infratestdimap', 'insa', 'yougov']
+for i, institute in enumerate(institutes):
+        print(f"{i+1}. {institute}")
+
+# Get user input
+choice = input("Enter the number of your choice: ")
+
+# Validate user input
+try:
+    choice = int(choice)
+    if 1 <= choice <= len(institutes):
+                print(f"You chose: {institutes[choice-1]}")
+    else:
+                print("Invalid choice. Please enter a number between 1 and", len(institutes))
+except ValueError:
+        print("Invalid input. Please enter a number.")
+
+url = 'https://www.wahlrecht.de/umfragen/' + institutes[choice-1]  + '.htm'
+#url = 'https://www.wahlrecht.de/umfragen/yougov.htm'  # Replace with the actual URL
 table_id = 'wilko'  # Replace with the actual table ID
 
 table_content = prognosenfunc.get_table_data(url, table_id)
